@@ -1,0 +1,19 @@
+@(data: Array[Array[String]]) 
+
+@main("Play with Scala.js") { 
+  
+  <h2>Table</h2>
+  <table>
+    @for(row <- data) {
+      <tr>
+        @for(item <- row) {
+          <td>
+            @item
+          </td>
+        }
+      </tr>
+    }
+  </table>
+  
+
+}
