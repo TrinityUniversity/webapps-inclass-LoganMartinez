@@ -17,3 +17,6 @@ GET /user/:name/:color controllers.Application.newRoute2(name, color)
 +nocsrf
 POST /user/   controllers.Application.postUser
 GET /getUsername/ controllers.Application.getUsername
+GET /studentData controllers.Application.getStudentData
+GET /validate1 controllers.Application.validate1(username: String)
+GET /schedulepage1 controllers.Application.schedulepage1

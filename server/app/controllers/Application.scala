@@ -4,6 +4,7 @@ import javax.inject._
 
 import shared.SharedMessages
 import play.api.mvc._
+import models._
 
 @Singleton
 class Application @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
@@ -68,5 +69,34 @@ class Application @Inject()(cc: ControllerComponents) extends AbstractController
   def getUsername() = Action {
     Ok(views.html.getUsername())
   } 
+
+  def getStudentData() = Action {
+    val data = StudentModel.getStudentData()
+    val combinedData = data.map(student => student.mkString(" ")).mkString("\n")
+    Ok(combinedData)
+  }
+
+  def validate1(username: String) = Action { implicit request => 
+    val studentData = StudentModel.getStudentData()
+    var studentExists = false
+    for (student <- studentData) {
+      val studentUsername = student(2).split('@')(0)
+      if (studentUsername == username) {
+        studentExists = true
+      }
+    }
+    if (studentExists) {
+      Redirect(routes.Application.schedulepage1)
+    } else {
+      Ok("Get ann] account bozzo")
+    }
+  }
+
+  def schedulepage1() = Action { implicit request =>
+    val usernameOption = request.session.get("username")
+    usernameOption.map { username => 
+      Ok("user logged in " + username)
+    }.getOrElse(Ok("Get ann] account bozzo"))
+  }
 
 }
