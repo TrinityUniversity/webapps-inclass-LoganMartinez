@@ -20,3 +20,9 @@ GET /getUsername/ controllers.Application.getUsername
 GET /studentData controllers.Application.getStudentData
 GET /validate1 controllers.Application.validate1(username: String)
 GET /schedulepage1 controllers.Application.schedulepage1
+GET /login controllers.Application.login
+GET /logout controllers.Application.logout
+GET /loggedIn controllers.Application.loggedIn
+GET /counter controllers.Application.counter
++nocsrf
+POST /incrementCounter controllers.Application.incrementCounter

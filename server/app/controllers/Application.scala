@@ -86,17 +86,44 @@ class Application @Inject()(cc: ControllerComponents) extends AbstractController
       }
     }
     if (studentExists) {
-      Redirect(routes.Application.schedulepage1)
+      Redirect(routes.Application.schedulepage1).withSession("username" -> username)
     } else {
-      Ok("Get ann] account bozzo")
+      Redirect(routes.Application.login)
     }
   }
 
   def schedulepage1() = Action { implicit request =>
     val usernameOption = request.session.get("username")
     usernameOption.map { username => 
-      Ok("user logged in " + username)
-    }.getOrElse(Ok("Get ann] account bozzo"))
+      Redirect(routes.Application.loggedIn)
+    }.getOrElse(Redirect(routes.Application.login))
+  }
+
+  def login = Action {
+    Ok(views.html.loginPage())
+  }
+
+  def logout = Action {
+    Redirect(routes.Application.login).withNewSession
+  }
+
+  def loggedIn() = Action { implicit request => 
+    val usernameOption = request.session.get("username")
+    usernameOption.map( username => 
+      Ok(views.html.LoggedInPage(username))
+    ).getOrElse(Redirect(routes.Application.login))
+    
+  }
+  
+  def counter() = Action { implicit request =>
+    val count = CounterValue.get()
+    Ok(views.html.counterView(count))
+  }
+  
+  def incrementCounter() = Action { implicit request => 
+    CounterValue.increment()
+    val count = CounterValue.get()
+    Ok(count.toString())
   }
 
 }

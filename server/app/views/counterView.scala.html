@@ -1,0 +1,7 @@
+@(count: Int) 
+@main("Counter view") {
+  <h2>Counter</h2>
+  <p id="count">@count</p>
+  <script src=@routes.Assets.versioned("js/counter.js")></script>
+  <button id="increment-button" onclick=incrementCounter()>increment</button>
+}
